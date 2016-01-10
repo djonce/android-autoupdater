@@ -13,12 +13,12 @@ public class UpdateJsonParser extends AbstractParser {
             return null;
         }
         UpdateInfo updateInfo = new UpdateInfo();
-//        JSONObject jsonObject = new JSONObject(content);
-//        updateInfo.setApkUrl(jsonObject.getString(TAG_APK_URL));
-//        updateInfo.setAppName(jsonObject.getString(TAG_APP_NAME));
-//        updateInfo.setVersionCode(jsonObject.getString(TAG_VERSION_CODE));
-//        updateInfo.setVersionName(jsonObject.getString(TAG_VERSION_NAME));
-//        updateInfo.setUpdateTips(jsonObject.getString(TAG_UPDATE_TIPS));
+        JSONObject jsonObject = new JSONObject(content);
+        updateInfo.setApkUrl(jsonObject.getString(TAG_APK_URL));
+        updateInfo.setAppName(jsonObject.getString(TAG_APP_NAME));
+        updateInfo.setVersionCode(jsonObject.getString(TAG_VERSION_CODE));
+        updateInfo.setVersionName(jsonObject.getString(TAG_VERSION_NAME));
+        updateInfo.setUpdateTips(jsonObject.getString(TAG_UPDATE_TIPS));
         return updateInfo;
     }
 

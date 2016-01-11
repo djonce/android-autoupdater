@@ -1,12 +1,19 @@
 package com.wangj.library;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.webkit.URLUtil;
 
 /**
  *
@@ -16,10 +23,6 @@ public class UpdateManager {
 
     private static final String TAG = UpdateManager.class.getSimpleName();
     private Context mContext;
-    private String  checkUrl;
-    private boolean isAutoInstall;
-    private boolean isHitNewVersion;
-
 
     private NotificationManager notificationManager;
     private NotificationCompat.Builder ntfBuilder;
@@ -33,13 +36,52 @@ public class UpdateManager {
 
     private static final String PATH = Environment.getExternalStorageDirectory().getPath();
 
-    public UpdateManager(Builder builder) {
-        this.mContext = builder.context;
-        this.checkUrl = builder.checkUrl;
-        this.isAutoInstall = builder.isAutoInstall;
-        this.isHitNewVersion = builder.isHintNewVersion;
-
+    public UpdateManager(UpdateOption updateOption) {
+        this.mContext = updateOption.context;
         this.sharedPreferences = mContext.getSharedPreferences("Updater", Context.MODE_PRIVATE);
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case UPDATE_NOTIFICATION_PROGRESS: //下载进度
+                    showDownloadNotificationUI((UpdateInfo) msg.obj, msg.arg1);
+                    break;
+                case COMPLETE_DOWNLOAD_APK:
+
+                    break;
+            }
+        }
+    };
+
+    private void showDownloadNotificationUI(UpdateInfo updateInfo, final int progress) {
+        if(mContext != null){
+            String contentText = new StringBuffer()
+                                    .append(progress)
+                                    .append("%").toString();
+            PendingIntent contentIntent = PendingIntent.getActivity(
+                    mContext,
+                    0,
+                    new Intent(),
+                    PendingIntent.FLAG_CANCEL_CURRENT);
+            if(notificationManager == null){
+                notificationManager = (NotificationManager) mContext
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
+            }
+            if(ntfBuilder == null) {
+                ntfBuilder = new NotificationCompat.Builder(mContext)
+                        .setSmallIcon(mContext.getApplicationInfo().icon)
+                        .setTicker("开始下载...")
+                        .setContentTitle(updateInfo.getAppName())
+                        .setContentIntent(contentIntent);
+            }
+            ntfBuilder.setContentText(contentText);
+            ntfBuilder.setProgress(100, progress, false);
+            notificationManager.notify(DOENLOAD_NOTIFICATION_ID, ntfBuilder.build());
+        }
+
     }
 
     public void check() {
@@ -63,11 +105,31 @@ public class UpdateManager {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            if(onUpdateListener != null){
+                onUpdateListener.onStartCheck();
+            }
         }
 
         @Override
         protected UpdateInfo doInBackground(String... params) {
-            return null;
+            UpdateInfo updateInfo = null;
+            if(params.length == 0) {
+                Log.e(TAG, "NullPointerException  Url parameter must not be null.");
+                return null;
+            }
+            String url = params[0];
+            if (!URLUtil.isNetworkUrl(url)) {
+                Log.e(TAG,"IllegalArgumentException The URL is invalid.");
+                return null;
+            }
+            try {
+
+
+            }catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+            return updateInfo;
         }
 
         @Override
@@ -79,58 +141,35 @@ public class UpdateManager {
     private class AsyncDownLoad extends AsyncTask<UpdateInfo, Integer, Boolean> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
         protected Boolean doInBackground(UpdateInfo... params) {
 
             return null;
         }
     }
 
-    public static class Builder {
-        private Context context;
-        private String  checkUrl; //检查更新的接口地址
-
-        private boolean isAutoInstall; //是否自动安装
-        private boolean isHintNewVersion;
-
-        public Builder(Context ctx){
-            this.context = ctx;
+    /**
+     * 获取当前App版本
+     *
+     * @return packageInfo
+     */
+    private PackageInfo getPackageInfo() {
+        PackageInfo packageInfo = null;
+        if(mContext != null){
+            try {
+                packageInfo = mContext.getPackageManager()
+                        .getPackageInfo(mContext.getPackageName(), 0);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
         }
-
-        /**
-         *
-         * @param checkUrl
-         * @return
-         */
-        public Builder checkUrl(String checkUrl) {
-            this.checkUrl = checkUrl;
-            return this;
-        }
-
-        /**
-         *
-         * @param isAuto
-         * @return true下载完成后自动安装，false下载完成后需要点击通知栏安装
-         */
-        public Builder isAutoInstall(boolean isAuto) {
-            this.isAutoInstall = isAuto;
-            return this;
-        }
-
-        /**
-         * 是否提示有更新
-         *
-         * @param isHint
-         * @return true提示，false不提示
-         */
-        public Builder isHintNewVersion(boolean isHint) {
-            this.isHintNewVersion = isHint;
-            return this;
-        }
-
-        public UpdateManager build(){
-            return new UpdateManager(this);
-        }
+        return packageInfo;
     }
+
 
 
 }

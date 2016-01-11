@@ -9,8 +9,6 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * xml解析器
@@ -18,27 +16,22 @@ import java.util.Map;
  */
 public class UpdateXmlParser extends AbstractParser {
 
-
     @Override
-    public UpdateInfo parse(String content) throws UpdateException {
-        UpdateInfo info;
+    public UpdateInfo parse(String content) throws Exception {
+        UpdateInfo info = null;
         if (TextUtils.isEmpty(content)) {
-            throw new UpdateException(UpdateException.PARSE_ERROR);
         }
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             XmlPullParser xpp = factory.newPullParser();
             xpp.setInput(new StringReader(content));
-
             info = parseUpdateInfo(xpp);
         } catch (XmlPullParserException e) {
             e.printStackTrace();
             Log.e("XmlPullParserException", e.toString());
-            throw new UpdateException(UpdateException.PARSE_ERROR);
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("IOException", e.toString());
-            throw new UpdateException(UpdateException.PARSE_ERROR);
         }
         return info;
     }
@@ -113,46 +106,6 @@ public class UpdateXmlParser extends AbstractParser {
         }
 
         return info;
-    }
-
-    /**
-     * Parse UpdateTips
-     *
-     * @param xpp
-     *
-     * @return
-     * @throws XmlPullParserException
-     * @throws IOException
-     */
-    private Map<String, String> parseUpdateTips(XmlPullParser xpp) throws XmlPullParserException, IOException {
-        Map<String, String> updateTips = new HashMap<>();
-        String currentTag;
-        String currentValue;
-
-        int eventType = xpp.getEventType();
-        while (eventType != XmlPullParser.END_DOCUMENT) {
-            switch (eventType) {
-                case XmlPullParser.START_DOCUMENT:
-                    break;
-                case XmlPullParser.START_TAG:
-                    currentTag = xpp.getName();
-                    if (currentTag.equals(TAG_UPDATE_TIPS)) {
-                        updateTips = new HashMap<>();
-                    } else {
-                        currentValue = xpp.nextText();
-                        updateTips.put(currentTag, currentValue);
-                    }
-                    break;
-                case XmlPullParser.END_TAG:
-                    break;
-                case XmlPullParser.TEXT:
-                    break;
-                default:
-                    break;
-            }
-            eventType = xpp.next();
-        }
-        return updateTips;
     }
 
 }

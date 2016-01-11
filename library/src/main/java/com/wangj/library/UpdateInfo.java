@@ -1,7 +1,5 @@
 package com.wangj.library;
 
-import java.util.Map;
-
 /**
  * Created by wangj on 16/1/7
  */
@@ -86,5 +84,20 @@ public class UpdateInfo {
 
     public void setUpdateTips(String updateTips) {
         this.updateTips = updateTips;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateInfo{" +
+                "appName='" + appName + '\'' +
+                ", appDescription='" + appDescription + '\'' +
+                ", packageName='" + packageName + '\'' +
+                ", versionCode='" + versionCode + '\'' +
+                ", versionName='" + versionName + '\'' +
+                ", forceUpdate=" + forceUpdate +
+                ", autoUpdate=" + autoUpdate +
+                ", apkUrl='" + apkUrl + '\'' +
+                ", updateTips='" + updateTips + '\'' +
+                '}';
     }
 }

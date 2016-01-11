@@ -1,5 +1,8 @@
 package com.wangj.library;
 
+import android.util.Log;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -7,8 +10,10 @@ import org.json.JSONObject;
  */
 public class UpdateJsonParser extends AbstractParser {
 
+    private static final String TAG = UpdateJsonParser.class.getSimpleName();
+
     @Override
-    public UpdateInfo parse(String content) throws UpdateException {
+    public UpdateInfo parse(String content) throws JSONException {
         if(content == null) {
             return null;
         }
@@ -19,6 +24,8 @@ public class UpdateJsonParser extends AbstractParser {
         updateInfo.setVersionCode(jsonObject.getString(TAG_VERSION_CODE));
         updateInfo.setVersionName(jsonObject.getString(TAG_VERSION_NAME));
         updateInfo.setUpdateTips(jsonObject.getString(TAG_UPDATE_TIPS));
+
+        Log.e(TAG, updateInfo.toString());
         return updateInfo;
     }
 

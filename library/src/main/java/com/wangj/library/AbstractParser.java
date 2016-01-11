@@ -15,5 +15,5 @@ public abstract class AbstractParser {
     public final static String TAG_APK_URL = "apkUrl";
     public final static String TAG_UPDATE_TIPS = "updateTips";
 
-    public abstract UpdateInfo parse(String content) throws UpdateException;
+    public abstract UpdateInfo parse(String content) throws Exception;
 }

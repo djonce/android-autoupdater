@@ -14,5 +14,5 @@ public interface OnUpdateListener {
 
     public void onDownloading(int progress);
 
-    public void onFinshDownload();
+    public void onFinishDownload();
 }

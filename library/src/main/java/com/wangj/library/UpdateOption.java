@@ -28,7 +28,7 @@ public final class UpdateOption {
         private boolean isAutoInstall; //是否自动安装
         private boolean isHintNewVersion;
 
-        private String  apkDir;
+        private String  apkDir;  // 下载的存放地址
         public Builder(Context ctx){
             this.context = ctx;
         }

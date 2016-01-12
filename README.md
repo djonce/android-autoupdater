@@ -8,13 +8,12 @@
 
 
 UpdateManager是管理类
-UpdateOptions配置
+UpdateOptions配置选项
         配置包括：UpdatePeriod更新级别和周期
 AbstractUpdateListener 抽象的更新接口
-                
 AbstractParser 抽象的检查结果解析器
+UpdateInfo 更新的实体类
 
-UpdateInfo 更新的
 
-－－
+
     

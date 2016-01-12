@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ *  Json解析器
  * Created by wangj on 2016/1/8
  */
 public class UpdateJsonParser extends AbstractParser {

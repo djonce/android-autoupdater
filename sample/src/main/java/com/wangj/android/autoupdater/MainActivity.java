@@ -1,6 +1,6 @@
 package com.wangj.android.autoupdater;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.wangj.library.DefaultUpdateListener;
@@ -9,7 +9,7 @@ import com.wangj.library.UpdateInfo;
 import com.wangj.library.UpdateManager;
 import com.wangj.library.UpdateOption;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         UpdateOption updateOption = new UpdateOption.Builder(this)
                                 .isAutoInstall(true)
-                                .checkUrl("http://test.19ba.cn/app/version.json")
+                                .checkUrl("http://test.19ba.cn/api/liwu.version.json")
                                 .setApkDir("/UpdateManager/apk/")
                                 .isHintNewVersion(false)
                                 .build();
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFinishDownload() {
+            public void onFinishDownload(String apkPath) {
 
             }
         });

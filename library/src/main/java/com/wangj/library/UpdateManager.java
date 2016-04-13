@@ -97,6 +97,7 @@ public class UpdateManager {
             return;
         }
         AsyncCheck asyncCheck = new AsyncCheck();
+        asyncCheck.execute();
     }
 
 
@@ -151,6 +152,13 @@ public class UpdateManager {
             return null;
         }
     }
+
+
+    private void showUpdateUi(final UpdateInfo updateInfo) {
+
+    }
+
+
 
     /**
      * 获取当前App版本

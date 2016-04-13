@@ -27,7 +27,7 @@ public class DefaultUpdateListener implements OnUpdateListener {
     }
 
     @Override
-    public void onFinishDownload() {
+    public void onFinishDownload(String apkPath) {
 
     }
 }

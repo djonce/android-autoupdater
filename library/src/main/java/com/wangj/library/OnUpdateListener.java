@@ -6,13 +6,13 @@ package com.wangj.library;
  */
 public interface OnUpdateListener {
 
-    public void onStartCheck();
+    void onStartCheck();
 
-    public void onFinishCheck(UpdateInfo updateInfo);
+    void onFinishCheck(UpdateInfo updateInfo);
 
-    public void onStartDownload();
+    void onStartDownload();
 
-    public void onDownloading(int progress);
+    void onDownloading(int progress);
 
-    public void onFinishDownload();
+    void onFinishDownload(String apkPath);
 }

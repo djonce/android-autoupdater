@@ -26,7 +26,6 @@ public class UpdateJsonParser extends AbstractParser {
         updateInfo.setVersionName(jsonObject.getString(TAG_VERSION_NAME));
         updateInfo.setUpdateTips(jsonObject.getString(TAG_UPDATE_TIPS));
 
-        Log.e(TAG, updateInfo.toString());
         return updateInfo;
     }
 

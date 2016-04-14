@@ -23,32 +23,32 @@ public class MainActivity extends Activity {
                                 .isHintNewVersion(false)
                                 .build();
         UpdateManager updateManager = new UpdateManager(updateOption);
-        updateManager.check(new OnUpdateListener() {
-            @Override
-            public void onStartCheck() {
-
-            }
-
-            @Override
-            public void onFinishCheck(UpdateInfo updateInfo) {
-
-            }
-
-            @Override
-            public void onStartDownload() {
-
-            }
-
-            @Override
-            public void onDownloading(int progress) {
-
-            }
-
-            @Override
-            public void onFinishDownload(String apkPath) {
-
-            }
-        });
+//        updateManager.check(new OnUpdateListener() {
+//            @Override
+//            public void onStartCheck() {
+//
+//            }
+//
+//            @Override
+//            public void onFinishCheck(UpdateInfo updateInfo) {
+//
+//            }
+//
+//            @Override
+//            public void onStartDownload() {
+//
+//            }
+//
+//            @Override
+//            public void onDownloading(int progress) {
+//
+//            }
+//
+//            @Override
+//            public void onFinishDownload(String apkPath) {
+//
+//            }
+//        });
 
         updateManager.check(new DefaultUpdateListener());
     }

@@ -1,5 +1,7 @@
 package com.wangj.library.utils;
 
+import android.content.Context;
+
 /**
  *  网络工具
  *
@@ -7,5 +9,14 @@ package com.wangj.library.utils;
  */
 public class NetWorkUtils {
 
+    private Context mContext;
 
+    public NetWorkUtils(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    public int getNetType() {
+
+        return 0;
+    }
 }

@@ -7,7 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- *
  * Created by wangj on 2016/1/8
  */
 public class HttpRequest {
@@ -15,14 +14,15 @@ public class HttpRequest {
     public static InputStream get(String url) {
         try {
             URL urlPath = new URL(url);
-            HttpURLConnection httpURLConnection = (HttpURLConnection)urlPath.openConnection();
+            HttpURLConnection httpURLConnection = (HttpURLConnection) urlPath.openConnection();
             httpURLConnection.setConnectTimeout(3000);
             httpURLConnection.setReadTimeout(3000);
             httpURLConnection.connect();
             InputStream inputStream = null;
-            if(httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
+            if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = httpURLConnection.getInputStream();
             }
+
             return inputStream;
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,5 +42,14 @@ public class HttpRequest {
         return outputStream.toString();
     }
 
-
+    /**
+     * 获取远程更新信息
+     *
+     * @param url
+     * @return
+     * @throws IOException
+     */
+    public static String getVersion(String url) throws IOException {
+        return readStream(get(url));
+    }
 }

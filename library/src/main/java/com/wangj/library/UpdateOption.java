@@ -8,7 +8,7 @@ import android.content.Context;
  */
 public final class UpdateOption {
     public  final   Context context;
-    private final   String  checkUrl; //检查更新的接口地址
+    public final   String  checkUrl; //检查更新的接口地址
     private final   boolean autoInstall; //是否自动安装
     private boolean isHintNewVersion;
     private boolean forceUpdate;
